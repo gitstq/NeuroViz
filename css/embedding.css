@@ -1,0 +1,128 @@
+/* ============================================
+   Embedding Visualization Styles
+   ============================================ */
+
+.embedding-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-primary);
+}
+
+#embedding-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.embedding-legend {
+    position: absolute;
+    bottom: var(--space-md);
+    right: var(--space-md);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    box-shadow: var(--shadow-md);
+    font-size: 0.75rem;
+    min-width: 160px;
+}
+
+.embedding-legend h5 {
+    font-size: 0.8rem;
+    margin-bottom: var(--space-sm);
+    color: var(--text-primary);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 2px 0;
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.legend-label {
+    color: var(--text-secondary);
+}
+
+/* Embedding info tooltip */
+.embedding-tooltip {
+    position: absolute;
+    padding: 8px 12px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-md);
+    font-size: 0.75rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    z-index: 50;
+}
+
+.embedding-tooltip.visible {
+    opacity: 1;
+}
+
+.embedding-tooltip .et-token {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.embedding-tooltip .et-coords {
+    font-family: var(--font-mono);
+    color: var(--text-tertiary);
+    font-size: 0.7rem;
+}
+
+/* Embedding point styles */
+.embedding-point {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border: 2px solid transparent;
+}
+
+.embedding-point:hover {
+    transform: translate(-50%, -50%) scale(1.4);
+    border-color: white;
+    box-shadow: var(--shadow-md);
+    z-index: 10;
+}
+
+.embedding-point.selected {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(79, 110, 247, 0.3);
+}
+
+/* Embedding axis labels */
+.embedding-axis {
+    position: absolute;
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+}
+
+.embedding-axis.x-axis {
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.embedding-axis.y-axis {
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+}

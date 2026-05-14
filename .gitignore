@@ -1,0 +1,10 @@
+# NeuroViz
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.local
+dist/
+.cache/
+*.tmp

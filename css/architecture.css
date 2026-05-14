@@ -1,0 +1,166 @@
+/* ============================================
+   Architecture Visualization Styles
+   ============================================ */
+
+.canvas-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-primary);
+}
+
+#arch-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.layer-tooltip {
+    position: absolute;
+    padding: 10px 14px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    font-size: 0.8rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    z-index: 50;
+    max-width: 280px;
+}
+
+.layer-tooltip.visible {
+    opacity: 1;
+}
+
+.layer-tooltip .tooltip-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+}
+
+.layer-tooltip .tooltip-type {
+    font-size: 0.7rem;
+    color: var(--accent-blue);
+    margin-bottom: 6px;
+}
+
+.layer-tooltip .tooltip-desc {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    line-height: 1.5;
+}
+
+.layer-tooltip .tooltip-params {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid var(--border-light);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+}
+
+/* Layer Details Panel */
+.layer-details {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 280px;
+    background: var(--bg-secondary);
+    border-left: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    z-index: 40;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform var(--transition-normal);
+}
+
+.layer-details.open {
+    transform: translateX(0);
+}
+
+.layer-details h4 {
+    padding: var(--space-md);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    position: sticky;
+    top: 0;
+    background: var(--bg-secondary);
+    z-index: 1;
+}
+
+.layer-info {
+    padding: var(--space-md);
+}
+
+.layer-info .info-section {
+    margin-bottom: var(--space-md);
+}
+
+.layer-info .info-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-xs);
+    font-weight: 600;
+}
+
+.layer-info .info-value {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+.layer-info .info-value.mono {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    background: var(--bg-tertiary);
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+}
+
+.layer-info .param-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+}
+
+.layer-info .param-item {
+    background: var(--bg-tertiary);
+    padding: var(--space-sm);
+    border-radius: var(--radius-sm);
+}
+
+.layer-info .param-item .param-name {
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+}
+
+.layer-info .param-item .param-val {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+}
+
+/* Architecture Layer Colors */
+.layer-color-input { color: var(--layer-input); }
+.layer-color-embedding { color: var(--layer-embedding); }
+.layer-color-attention { color: var(--layer-attention); }
+.layer-color-feedforward { color: var(--layer-feedforward); }
+.layer-color-normalization { color: var(--layer-normalization); }
+.layer-color-output { color: var(--layer-output); }
+.layer-color-activation { color: var(--layer-activation); }
+
+/* Layer node highlight animation */
+@keyframes layerGlow {
+    0%, 100% { filter: drop-shadow(0 0 4px rgba(79, 110, 247, 0.3)); }
+    50% { filter: drop-shadow(0 0 12px rgba(79, 110, 247, 0.6)); }
+}
+
+.layer-processing {
+    animation: layerGlow 1s ease-in-out infinite;
+}

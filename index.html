@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroViz - Interactive AI Model Architecture Visualizer</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/architecture.css">
+    <link rel="stylesheet" href="css/attention.css">
+    <link rel="stylesheet" href="css/embedding.css">
+    <link rel="stylesheet" href="css/controls.css">
+    <link rel="stylesheet" href="css/lessons.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <h1 class="logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">NeuroViz</span>
+            </h1>
+            <span class="version-badge">v1.0.0</span>
+        </div>
+        <nav class="header-nav">
+            <button class="nav-btn active" data-view="architecture">🏗️ Architecture</button>
+            <button class="nav-btn" data-view="attention">👁️ Attention</button>
+            <button class="nav-btn" data-view="embedding">📊 Embeddings</button>
+            <button class="nav-btn" data-view="lessons">📚 Lessons</button>
+        </nav>
+        <div class="header-right">
+            <select id="model-select" class="model-select">
+                <option value="transformer">Transformer (GPT-2 Style)</option>
+                <option value="bert">BERT Encoder</option>
+                <option value="cnn">CNN Classifier</option>
+                <option value="rnn">RNN Sequence</option>
+            </select>
+            <button id="theme-toggle" class="icon-btn" title="Toggle Theme">🌙</button>
+            <button id="fullscreen-btn" class="icon-btn" title="Fullscreen">⛶</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Input Panel -->
+        <section class="input-panel">
+            <div class="input-header">
+                <h2>📝 Input Text</h2>
+                <div class="input-controls">
+                    <button id="step-mode-btn" class="control-btn" title="Step-by-step mode">
+                        🔍 Step Mode
+                    </button>
+                    <button id="run-btn" class="control-btn primary" title="Run visualization">
+                        ▶️ Run
+                    </button>
+                    <button id="reset-btn" class="control-btn" title="Reset">
+                        🔄 Reset
+                    </button>
+                </div>
+            </div>
+            <textarea id="input-text" class="input-textarea" placeholder="Type text here to visualize how the AI model processes it...&#10;&#10;Example: 'The cat sat on the mat'">The cat sat on the mat</textarea>
+            <div class="token-preview" id="token-preview">
+                <!-- Tokens will be rendered here -->
+            </div>
+        </section>
+
+        <!-- Visualization Area -->
+        <section class="viz-area">
+            <!-- Architecture View -->
+            <div id="architecture-view" class="viz-view active">
+                <div class="viz-toolbar">
+                    <h3 class="viz-title">Model Architecture</h3>
+                    <div class="viz-controls">
+                        <button class="viz-ctrl-btn" data-zoom="in" title="Zoom In">🔍+</button>
+                        <button class="viz-ctrl-btn" data-zoom="out" title="Zoom Out">🔍-</button>
+                        <button class="viz-ctrl-btn" data-zoom="fit" title="Fit to View">⊞</button>
+                        <button class="viz-ctrl-btn" id="export-svg-btn" title="Export SVG">📥</button>
+                        <button class="viz-ctrl-btn" id="export-png-btn" title="Export PNG">🖼️</button>
+                    </div>
+                </div>
+                <div class="canvas-container" id="arch-canvas-container">
+                    <canvas id="arch-canvas"></canvas>
+                    <div class="layer-tooltip" id="layer-tooltip"></div>
+                </div>
+                <!-- Layer Details Panel -->
+                <div class="layer-details" id="layer-details">
+                    <h4>Layer Inspector</h4>
+                    <div class="layer-info" id="layer-info">
+                        <p class="placeholder-text">Click on a layer to inspect its details</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Attention View -->
+            <div id="attention-view" class="viz-view">
+                <div class="viz-toolbar">
+                    <h3 class="viz-title">Attention Patterns</h3>
+                    <div class="viz-controls">
+                        <div class="layer-selector">
+                            <label>Layer:</label>
+                            <select id="attention-layer-select"></select>
+                        </div>
+                        <div class="head-selector">
+                            <label>Head:</label>
+                            <select id="attention-head-select"></select>
+                        </div>
+                        <button class="viz-ctrl-btn" id="export-attention-btn" title="Export Attention Map">📥</button>
+                    </div>
+                </div>
+                <div class="attention-container">
+                    <div class="attention-matrix" id="attention-matrix">
+                        <!-- Attention heatmap will be rendered here -->
+                    </div>
+                    <div class="attention-stats" id="attention-stats">
+                        <h4>Attention Statistics</h4>
+                        <div class="stats-content" id="stats-content"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Embedding View -->
+            <div id="embedding-view" class="viz-view">
+                <div class="viz-toolbar">
+                    <h3 class="viz-title">Token Embeddings</h3>
+                    <div class="viz-controls">
+                        <div class="embedding-mode">
+                            <button class="mode-btn active" data-mode="pca">PCA</button>
+                            <button class="mode-btn" data-mode="tsne">t-SNE</button>
+                            <button class="mode-btn" data-mode="raw">Raw</button>
+                        </div>
+                        <button class="viz-ctrl-btn" id="export-embedding-btn" title="Export Embedding">📥</button>
+                    </div>
+                </div>
+                <div class="embedding-container">
+                    <canvas id="embedding-canvas"></canvas>
+                    <div class="embedding-legend" id="embedding-legend"></div>
+                </div>
+            </div>
+
+            <!-- Lessons View -->
+            <div id="lessons-view" class="viz-view">
+                <div class="lessons-container">
+                    <div class="lessons-sidebar" id="lessons-sidebar">
+                        <h3>📚 Learning Path</h3>
+                        <div class="lesson-list" id="lesson-list"></div>
+                    </div>
+                    <div class="lesson-content" id="lesson-content">
+                        <div class="lesson-placeholder">
+                            <span class="placeholder-icon">📖</span>
+                            <p>Select a lesson to begin learning</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Output Panel -->
+        <section class="output-panel">
+            <div class="output-header">
+                <h2>📋 Processing Log</h3>
+                <div class="output-controls">
+                    <button id="clear-log-btn" class="control-btn small">🗑️ Clear</button>
+                </div>
+            </div>
+            <div class="output-log" id="output-log">
+                <div class="log-entry info">
+                    <span class="log-time">--:--:--</span>
+                    <span class="log-msg">NeuroViz initialized. Ready to visualize!</span>
+                </div>
+            </div>
+            <!-- Step Controls (visible in step mode) -->
+            <div class="step-controls hidden" id="step-controls">
+                <button id="prev-step-btn" class="step-btn">⏮️ Prev</button>
+                <span class="step-indicator" id="step-indicator">Step 0 / 0</span>
+                <button id="next-step-btn" class="step-btn">Next ⏭️</button>
+                <button id="auto-play-btn" class="step-btn">⏩ Auto Play</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-left">
+            <span>🧠 NeuroViz v1.0.0 — Interactive AI Model Architecture Visualizer</span>
+        </div>
+        <div class="footer-center">
+            <span id="processing-status" class="status-badge idle">● Idle</span>
+        </div>
+        <div class="footer-right">
+            <a href="https://github.com/gitstq/NeuroViz" target="_blank" class="footer-link">GitHub</a>
+            <span class="footer-divider">|</span>
+            <span>MIT License</span>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/models.js"></script>
+    <script src="js/tokenizer.js"></script>
+    <script src="js/embedding.js"></script>
+    <script src="js/attention.js"></script>
+    <script src="js/architecture.js"></script>
+    <script src="js/renderer.js"></script>
+    <script src="js/lessons.js"></script>
+    <script src="js/export.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
